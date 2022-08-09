@@ -10,9 +10,14 @@ app.get("/first151", async (req, res) => {
 })
 
 app.get("/:id", async (req, res) => {
-  const response = await axios.get(
-    `https://pokeapi.co/api/v2/pokemon/${req.params.id}`
-  )
-  res.json(response.data)
+  try {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${req.params.id}`
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(error.response.status).json(error.message)
+  }
 })
+
 module.exports = app
